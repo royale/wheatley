@@ -30,6 +30,7 @@ import os
 import dgl
 import glob
 import pickle
+import gzip
 
 import gymnasium as gym
 from psp.env.graphgym.async_vector_env import AsyncGraphVectorEnv
@@ -163,9 +164,9 @@ class PPO:
                             + str(os.getpid())
                             + "_"
                             + str(step * self.num_envs + i)
-                            + ".obs"
+                            + ".gz"
                         )
-                        pickle.dump(o, open(fname, "wb"))
+                        pickle.dump(o, gzip.open(fname, "wb", compresslevel=1))
                         obs.append(fname)
             else:
                 obs.append(next_obs)
